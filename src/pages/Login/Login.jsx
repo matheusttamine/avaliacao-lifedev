@@ -1,5 +1,6 @@
 import styles from './Login.module.css'
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useAuthentication } from '../../hooks/useAuthentication'
 
 
@@ -7,22 +8,21 @@ const Login = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
+    const navigate = useNavigate();
 
-    const { login, error: authError, loading } = useAuthentication()
+    const { login, error: authError, loading } = useAuthentication();
 
     const handlerSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        setError("");
 
-        setError("")
-        const user = {
-            email,
-            password,
+        try {
+            await login({ email, password});
+            navigate('/dashboard');
+        } catch (error) {
+            setError(error.message);
         }
-
-        const res = await login(user)
-
-        console.log(res)
-    }
+    };
 
     useEffect(() => {
         console.log(authError)
