@@ -1,4 +1,33 @@
 name: Deploy to Firebase
 on:
   push:
-    branches: []
+    branches: [avaliacaodw-matheusttamine]
+  jobs:
+    deploy:
+      runs-on: ubuntu-latest
+
+      steps:
+        - uses : actions/checkout@v3
+
+        - name: Set up Node.js 
+          uses: actions/setup-node@v3
+          with:
+            node-version: '20'
+
+        - name: Install dependencies
+          run: npm Install
+
+        - name: Build Project
+          run: npm run Build
+
+        - name: Install Firebase CLI
+          run: npm install -g firebase-tools
+
+        - name: Deploy to Firebase
+          uses: FirebaseExtended/action-hosting-deploy@v0
+          with:
+            repoToken: '${{ secrets.GITHUB_TOKEN }}'
+            firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}'
+            projectId: lifedev-tamine
+            debug: true
+            channelId: live         
