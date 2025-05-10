@@ -1,10 +1,10 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
-import Dashboard from './pages/Dashboard/Dashboard;'
+import Dashboard from './pages/Dashboard/Dashboard'
 import PostDetail from './pages/PostDetail/PostDetail';
 import CreatePost from './pages/CreatePost/CreatePost';
 import { useAuth } from './hooks/useAuth';
@@ -14,30 +14,34 @@ function App() {
   const { currentUser } = useAuth()
 
   return (
-    <BrowserRouter>
-    <Navbar />
-    <div className="container">
-      <Routes>
-          <Route path="/" element={<Home/>}/>
-          <Route path="/login" element={<Login/>}/>
-          <Route path="/register" element={<Register/>}/>
+    <>
+      <div>
+      <Navbar />
+      <div className="container">
+        <Routes>
+            <Route path="/" element={<Home/>}/>
+            <Route path="/login" element={<Login/>}/>
+            <Route path="/register" element={<Register/>}/>
 
-          <Route path="/dashboard" element={currentUser?<Dashboard/> : <Navigate to="/login"/>}
-          />
-          
-          <Route path="/post/:id" element={currentUser?<PostDetail/> : <Navigate to="/login"/>}
-          />
+            <Route path="/dashboard" element={currentUser?<Dashboard/> : <Navigate to="/login"/>}
+            />
+            
+            <Route path="/post/:id" element={currentUser?<PostDetail/> : <Navigate to="/login"/>}
+            />
 
-          <Route path="/post/new" element={currentUser?<CreatePost/> : <Navigate to="/login"/>}
-          />
+            <Route path="/post/new" element={currentUser?<CreatePost/> : <Navigate to="/login"/>}
+            />
 
-          <Route path="*" element={<Navigate to={currentUser? "/dashboard": "/"}/>}
-          />
+            <Route path="*" element={<Navigate to={currentUser? "/dashboard": "/"}/>}
+            />
 
-      </Routes>
-    </div>
-    <Footer />
-    </BrowserRouter>
+        </Routes>
+        
+      </div>
+      <Footer />
+      </div>
+    </>
+    
   )
 }
 

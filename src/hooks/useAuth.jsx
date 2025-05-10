@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { auth } from '../firebase/config'
-/*ajuste conforme sua estrutura*/
 import { onAuthStateChanged } from "firebase/auth"; 
 
 export function useAuth() {
@@ -14,7 +13,7 @@ export function useAuth() {
         })
     
         return unsubscribe
-    }, [])
+    }, [auth])
 
     return { currentUser, loading }
 }
